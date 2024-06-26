@@ -55,8 +55,9 @@ Agg_Insurance_df=pd.DataFrame(Insurance_agg_data)
 #User_Data_Dictionary:
 
 user_agg_data={
-                     "Reg_users":[],
-                     "App_opens":[],
+                     "User_States":[],
+                     "User_Years":[],
+                     "User_Qtr":[],
                      "User_Device_Brand":[],
                      "User_Device_count":[],
                      "User_Device_percent":[]
@@ -82,27 +83,23 @@ for user_states in agg_user_path:
             with open("/workspaces/Phonepe_Pulse_Data/pulse/data/aggregated/user/country/india/state/"+user_states+"/"+user_years+"/"+file,"r") as json_file :
                 agg_json_user_file=js.load(json_file)
                 #print(agg_json_user_file)
+            
+            data=agg_json_user_file['data']['usersByDevice']
+            if data is not None:
+                for i in data: 
+                   agg_user_device_brand=i['brand']
+                   agg_user_device_count=i['count']
+                   agg_user_device_percent=i['percentage']
+                   user_agg_data["User_Device_Brand"].append(agg_user_device_brand)
+                   user_agg_data["User_Device_count"].append(agg_user_device_count)
+                   user_agg_data["User_Device_percent"].append(agg_user_device_percent)
+                   user_agg_data['User_States'].append(user_states)
+                   user_agg_data["User_Years"].append(user_years)
+                   user_agg_data["User_Qtr"].append(int(file.strip(".json")))
 
-
-            for data in agg_json_user_file['data']['aggregated']:
-                agg_reg_user_no=data['registeredUsers']
-                
-                #['registeredUsers']
-                print(agg_reg_user_no)
-                #agg_user_app_open=data['aggregated'][0]['appOpens']
-                #agg_user_device_brand=data['aggregated']['usersByDevice']#[0]['brand']
-                #print(agg_user_device_brand)
-                #agg_user_device_count=data['aggregated']['usersByDevice'][0]['count']
-                #agg_user_device_percent=data['aggregated']['usersByDevice'][0]['percentage']
-
-                #user_agg_data["App_opens"].append(agg_reg_user_no)
-                #user_agg_data["Reg_users"].append(agg_user_app_open)
-                #user_agg_data["User_Device_Brand"].append(agg_user_device_brand)
-                #user_agg_data["User_Device_count"].append(agg_user_device_count)
-                #user_agg_data["User_Device_percent"].append(agg_user_device_percent)
 
 #User DataFrame                
-#Agg_Users_df=pd.DataFrame(user_agg_data)                
+Agg_Users_df=pd.DataFrame(user_agg_data)                
 #print(Agg_Users_df)
             
                 
