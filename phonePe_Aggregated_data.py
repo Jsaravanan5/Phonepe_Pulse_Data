@@ -84,6 +84,7 @@ for user_states in agg_user_path:
                 agg_json_user_file=js.load(json_file)
                 #print(agg_json_user_file)
             
+
             data=agg_json_user_file['data']['usersByDevice']
             if data is not None:
                 for i in data: 
@@ -92,7 +93,7 @@ for user_states in agg_user_path:
                    agg_user_device_percent=i['percentage']
                    user_agg_data["User_Device_Brand"].append(agg_user_device_brand)
                    user_agg_data["User_Device_count"].append(agg_user_device_count)
-                   user_agg_data["User_Device_percent"].append(agg_user_device_percent)
+                   user_agg_data["User_Device_percent"].append(float(agg_user_device_percent*100))
                    user_agg_data['User_States'].append(user_states)
                    user_agg_data["User_Years"].append(user_years)
                    user_agg_data["User_Qtr"].append(int(file.strip(".json")))
@@ -100,8 +101,22 @@ for user_states in agg_user_path:
 
 #User DataFrame                
 Agg_Users_df=pd.DataFrame(user_agg_data)                
-#print(Agg_Users_df)
-            
+print(Agg_Users_df)
+
+
+
+
+
+
+
+# Map DATA :
+
+
+
+
+
+
+
                 
 
 
