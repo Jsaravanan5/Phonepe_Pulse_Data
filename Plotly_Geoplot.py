@@ -42,9 +42,33 @@ for map_trx_states in map_trx_path:
 
 #Map_Transaction_Dataframe:
 map_trx_data_df=pd.DataFrame(map_trx_data)
+#print(map_trx_data_df)
+
+# Map User Data:
+
+map_user_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/map/user/hover/country/india/state/")
+#print(map_user_path)
+
+for map_user_states in map_user_path:
+    map_user_years_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/map/user/hover/country/india/state/"+map_user_states+"/")
+    #print(map_user_years_path)
+
+    for map_user_years in map_user_years_path:
+        map_user_file_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/map/user/hover/country/india/state/"+map_user_states+"/"+map_user_years+"/")
+        #print(map_user_file_path) 
+
+        for map_user_file in map_user_file_path:
+            with open("/workspaces/Phonepe_Pulse_Data/pulse/data/map/user/hover/country/india/state/"+map_user_states+"/"+map_user_years+"/"+map_user_file,"r")as map_json_file:
+                map_user_json_data=js.load(map_json_file)  
+                print(map_user_json_data)
+
+                #for i in map_user_json_data:
+                    #print(i)
+                    #map_user_dist=i['data']['hoverData']
+                    #print(map_user_dist)
 
 
-print(map_trx_data_df)
+
 
 
 

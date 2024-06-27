@@ -55,9 +55,9 @@ Agg_Insurance_df=pd.DataFrame(Insurance_agg_data)
 #User_Data_Dictionary:
 
 user_agg_data={
-                     "User_States":[],
-                     "User_Years":[],
-                     "User_Qtr":[],
+                     "User_Ins_States":[],
+                     "User_Ins_Years":[],
+                     "User_Ins_Qtr":[],
                      "User_Device_Brand":[],
                      "User_Device_count":[],
                      "User_Device_percent":[]
@@ -94,9 +94,9 @@ for user_states in agg_user_path:
                    user_agg_data["User_Device_Brand"].append(agg_user_device_brand)
                    user_agg_data["User_Device_count"].append(agg_user_device_count)
                    user_agg_data["User_Device_percent"].append(float(agg_user_device_percent*100))
-                   user_agg_data['User_States'].append(user_states)
-                   user_agg_data["User_Years"].append(user_years)
-                   user_agg_data["User_Qtr"].append(int(file.strip(".json")))
+                   user_agg_data['User_Ins_States'].append(user_states)
+                   user_agg_data["User_Ins_Years"].append(user_years)
+                   user_agg_data["User_Ins_Qtr"].append(int(file.strip(".json")))
 
 
 #User DataFrame                
