@@ -11,6 +11,9 @@ import seaborn as sns
 map_trx_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/map/transaction/hover/country/india/state/")
 #print(map_trx_path)
 
+#map_Transaction_Dictionary
+map_trx_data={ 'map_trx_state':[],'map__trx_dist':[],'map_trx_years':[],'map_trx_qtr':[],'map_trx_amount':[],'map_trx_count':[]}
+
 for map_trx_states in map_trx_path:
     map_trx_years_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/map/transaction/hover/country/india/state/"+map_trx_states+"/")
     #print(map_trx_years_path)
@@ -22,16 +25,30 @@ for map_trx_states in map_trx_path:
         for map_trx_file in map_trx_file_path:
             with open("/workspaces/Phonepe_Pulse_Data/pulse/data/map/transaction/hover/country/india/state/"+map_trx_states+"/"+map_trx_years+"/"+map_trx_file,"r")as map_json_file:
                 map_trx_json_data=js.load(map_json_file)    
-                #print(map_trx_json_data)
-                map_dist=[]
-                for i in map_trx_json_data['data']['hoverDataList']:   #[0]['metric']:
+                
+                
+                for i in map_trx_json_data['data']['hoverDataList']:
                     map_trx_dist=[i][0]['name']
-                    #print(map_trx_dist)
                     map_trx_count=[i][0]['metric'][0]['count']
-                    print(map_trx_count)
-                    map_trx_amount=[i][0]['metric'][0]['amount']
-                    map_trx_amt=round(map_trx_amount,2)
-                    print(map_trx_amount)
+                    map_trx_amt=[i][0]['metric'][0]['amount']
+                    map_trx_data['map_trx_state'].append(map_trx_states)
+                    map_trx_data['map__trx_dist'].append(map_trx_dist)
+                    map_trx_data['map_trx_years'].append(map_trx_years)
+                    map_trx_data['map_trx_qtr'].append(int(map_trx_file.strip(".json")))
+                    map_trx_data['map_trx_amount'].append(map_trx_amt)
+                    #print(map_trx_data['map_trx_amount'])
+                    map_trx_data['map_trx_count'].append(map_trx_count)
+
+
+#Map_Transaction_Dataframe:
+map_trx_data_df=pd.DataFrame(map_trx_data)
+
+
+print(map_trx_data_df)
+
+
+
+                    
 
 
 
