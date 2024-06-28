@@ -47,8 +47,8 @@ for ins_states in agg_ins_path:
 #insurance Dataframe            
 Agg_Insurance_df=pd.DataFrame(Insurance_agg_data)
 
-#print(Agg_Insurance_df)
-
+print(Agg_Insurance_df)
+#574
 
 
 
@@ -101,7 +101,8 @@ for user_states in agg_user_path:
 
 #User DataFrame                
 Agg_Users_df=pd.DataFrame(user_agg_data)                
-print(Agg_Users_df)
+#print(Agg_Users_df)
+#3564
 
 
 
