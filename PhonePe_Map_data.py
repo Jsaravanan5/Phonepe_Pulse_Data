@@ -129,6 +129,7 @@ for map_ins_states in map_ins_path:
 #Map_insurance_dataframe:
 
 map_ins_data_df=pd.DataFrame(map_ins_data_dict)
+map_ins_data_df.to_csv('map_ins_data.csv',index='False')
 #print(map_ins_data_df)
 #11559 rows
 
