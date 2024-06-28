@@ -69,7 +69,7 @@ for map_user_states in map_user_path:
         
                    
                 for i in map_user_json_data['data']['hoverData'].items():                    
-                     map_user_data_dict['map_user_dist'].append(i[0])
+                     map_user_data_dict['map_user_dist'].append(i[0].strip("district"))
                      map_user_data_dict['map_reg_users'].append(i[1]['registeredUsers'])
                      map_user_data_dict['map_app_opens'].append(i[1]['appOpens'])
                      map_user_data_dict['map_user_state'].append(map_user_states)
@@ -79,7 +79,7 @@ for map_user_states in map_user_path:
 
 #Map_User_Dataframe:
 map_user_data_df=pd.DataFrame(map_user_data_dict)
-#print(map_user_data_df)
+print(map_user_data_df)
 #18300 rows
 
 
@@ -117,7 +117,7 @@ for map_ins_states in map_ins_path:
                 map_ins_count=[i][0]['metric'][0]['count']
                 map_ins_amt=[i][0]['metric'][0]['amount']
                 map_ins_data_dict['map_ins_state'].append(map_ins_states)
-                map_ins_data_dict['map_ins_dist'].append(map_ins_dist)
+                map_ins_data_dict['map_ins_dist'].append(map_ins_dist.strip("district"))
                 map_ins_data_dict['map_ins_years'].append(map_ins_years)
                 map_ins_data_dict['map_ins_qtr'].append(int(map_ins_file.strip(".json")))
                 map_ins_data_dict['map_ins_amount'].append(map_ins_amt)
@@ -129,7 +129,7 @@ for map_ins_states in map_ins_path:
 #Map_insurance_dataframe:
 
 map_ins_data_df=pd.DataFrame(map_ins_data_dict)
-map_ins_data_df.to_csv('map_ins_data.csv',index='False')
+#map_ins_data_df.to_csv('map_ins_data.csv',index='False')
 #print(map_ins_data_df)
 #11559 rows
 
