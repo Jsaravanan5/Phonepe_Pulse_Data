@@ -44,7 +44,12 @@ for map_trx_states in map_trx_path:
 map_trx_data_df=pd.DataFrame(map_trx_data)
 #print(map_trx_data_df)
 
+
+
 # Map User Data:
+
+#map_User_Dictionary:
+map_user_data_dict={ 'map_user_dist':[],'map_reg_users':[],'map_app_opens':[]}
 
 map_user_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/map/user/hover/country/india/state/")
 #print(map_user_path)
@@ -60,12 +65,15 @@ for map_user_states in map_user_path:
         for map_user_file in map_user_file_path:
             with open("/workspaces/Phonepe_Pulse_Data/pulse/data/map/user/hover/country/india/state/"+map_user_states+"/"+map_user_years+"/"+map_user_file,"r")as map_json_file:
                 map_user_json_data=js.load(map_json_file)  
-                print(map_user_json_data)
+                #print(map_user_json_data)
+        
+                   
+                for i in map_user_json_data['data']['hoverData'].items():                    
+                    map_user_dist.append(i[0])
+                    map_reg_users.append(i[1]['registeredUsers'])
+                    map_app_opens.append(i[1]['appOpens'])
 
-                #for i in map_user_json_data:
-                    #print(i)
-                    #map_user_dist=i['data']['hoverData']
-                    #print(map_user_dist)
+           
 
 
 
