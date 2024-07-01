@@ -66,13 +66,13 @@ Top_trx_pincode_df=pd.DataFrame(top_trx_data_pincode_dict)
  #TOP insurance data :           
 
 #Top insurance Dictionary: 
-top_ins_data_dist_dict={ Top_ins_state:[],Top_ins_dist:[],Top_ins_year:[],Top_ins_qtr:[],Top_ins_amount:[],Top_ins_count:[] }
+top_ins_data_dist_dict={ 'Top_ins_state':[],'Top_ins_dist':[],'Top_ins_year':[],'Top_ins_qtr':[],'Top_ins_amount':[],'Top_ins_count':[] }
 
-top_ins_data_pincode_dict={ Top_ins_state:[],Top_ins_pincode:[],Top_ins_year:[],Top_ins_qtr:[],Top_ins_amount:[],Top_ins_count:[] }
+top_ins_data_pincode_dict={ 'Top_ins_state':[],'Top_ins_pincode':[],'Top_ins_year':[],'Top_ins_qtr':[],'Top_ins_amount':[],'Top_ins_count':[] }
 
 
 top_ins_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/top/insurance/country/india/state/") 
-
+#print(top_ins_path)
 for top_ins_states in top_ins_path:
     top_ins_years_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/top/insurance/country/india/state"+"/"+top_ins_states+"/")
     #print(top_ins_years_path)
@@ -90,7 +90,7 @@ for top_ins_states in top_ins_path:
                     top_ins_data_dist_dict['Top_ins_dist'].append(i['entityName'])
                     top_ins_data_dist_dict['Top_ins_count'].append(i['metric']['count'])
                     top_ins_data_dist_dict['Top_ins_amount'].append(round(i['metric']['amount'],2))
-                    top_ins_data_dist_dict['Top_ins_state'].append('top_ins_states')
+                    top_ins_data_dist_dict['Top_ins_state'].append(top_ins_states)
                     top_ins_data_dist_dict['Top_ins_qtr'].append(int(top_ins_files.strip(".json")))
                     top_ins_data_dist_dict['Top_ins_year'].append(top_ins_years)
 
@@ -100,7 +100,7 @@ for top_ins_states in top_ins_path:
                     top_ins_data_pincode_dict['Top_ins_pincode'].append(i['entityName'])
                     top_ins_data_pincode_dict['Top_ins_count'].append(i['metric']['count'])
                     top_ins_data_pincode_dict['Top_ins_amount'].append(round(i['metric']['amount'],2))
-                    top_ins_data_pincode_dict['Top_ins_state'].append('top_ins_states')
+                    top_ins_data_pincode_dict['Top_ins_state'].append(top_ins_states)
                     top_ins_data_pincode_dict['Top_ins_qtr'].append(int(top_ins_files.strip(".json")))
                     top_ins_data_pincode_dict['Top_ins_year'].append(top_ins_years)
 
@@ -108,11 +108,19 @@ for top_ins_states in top_ins_path:
 #Top _insurance_dict
 
 top_ins_data_dist_df=pd.DataFrame(top_ins_data_dist_dict)
-print(top_ins_data_dist_df)
+#print(top_ins_data_dist_df)
+#4711 Rows
 
 top_ins_data_pincode_df=pd.DataFrame(top_ins_data_pincode_dict)
+#print(top_ins_data_pincode_df)
+#5601 Rows
 
 
+#top_ins_data_pincode_df['Top_ins_pincode']=top_ins_data_pincode_df['Top_ins_pincode']=='600050' 
+#top_ins_data_pincode_df['Top_ins_state']=top_ins_data_pincode_df['Top_ins_state']=='tamil-nadu'
+print(top_ins_data_pincode_df)
+
+top_ins_data_pincode_df.to_csv('top_ins_data_pincode.csv',index='False')
 
 
 
