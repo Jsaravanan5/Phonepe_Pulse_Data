@@ -53,7 +53,7 @@ for top_trx_states in top_trx_path:
 
 #top Transaction District Dataframe:
 Top_trx_dist_data_df=pd.DataFrame(top_trx_data_dist_dict)
-print(Top_trx_dist_data_df)
+#print(Top_trx_dist_data_df)
 #7400 rows
 
 #top Transaction Pincode Dataframe:
@@ -61,5 +61,23 @@ Top_trx_pincode_df=pd.DataFrame(top_trx_data_pincode_dict)
 #print(Top_trx_pincode_df)
 #8924 rows
 
-             
 
+
+ #TOP insurance data :           
+
+
+top_ins_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/top/insurance/country/india/state/") 
+
+for top_ins_states in top_ins_path:
+    top_ins_years_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/top/insurance/country/india/state"+"/"+top_ins_states+"/")
+    #print(top_ins_years_path)
+
+    for top_ins_years in top_ins_years_path:
+        top_ins_file_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/top/insurance/country/india/state"+"/"+top_ins_states+"/"+top_ins_years+"/")
+        #print(top_ins_file_path)
+        
+        for top_ins_files in top_ins_file_path:
+            with open("/workspaces/Phonepe_Pulse_Data/pulse/data/top/insurance/country/india/state"+"/"+top_ins_states+"/"+top_ins_years+"/"+top_ins_files,"r")as top_ins_file:
+                top_ins_file_data=js.load(top_ins_file)
+                print(top_ins_file_data)
+                
