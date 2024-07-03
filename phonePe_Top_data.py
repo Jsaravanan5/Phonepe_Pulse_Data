@@ -120,7 +120,7 @@ top_ins_data_pincode_df=pd.DataFrame(top_ins_data_pincode_dict)
 #top_ins_data_pincode_df['Top_ins_state']=top_ins_data_pincode_df['Top_ins_state']=='tamil-nadu'
 print(top_ins_data_pincode_df)
 
-top_ins_data_pincode_df.to_csv('top_ins_data_pincode.csv',index='False')
+#top_ins_data_pincode_df.to_csv('top_ins_data_pincode.csv',index='False')
 
 
 
