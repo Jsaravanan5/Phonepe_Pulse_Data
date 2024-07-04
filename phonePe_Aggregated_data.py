@@ -59,9 +59,6 @@ def agg_ins_data():
     
 
 
-#aggregated_User_data function:
-
-
 def agg_user_data():
     #Agg_User_Data_Dictionary:
     user_agg_data= {

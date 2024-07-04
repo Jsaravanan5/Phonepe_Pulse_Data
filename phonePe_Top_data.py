@@ -161,22 +161,22 @@ def top_user_data():
                         Top_user_district_dict['top_reg_user_count'].append(i['registeredUsers'])
                         Top_user_district_dict['top_user_state'].append(top_user_states.replace("-"," "))
                         Top_user_district_dict['top_user_qtr'].append(int(top_user_files.strip(".json")))
-                        Top_user_district_dict['top_user_years'].append(top_user_years)
+                        Top_user_district_dict['top_user_years'].append(int(top_user_years))
 
 
 
     Top_user_district_dict
     
 
-    Top_user_district_dict_df=pd.DataFrame(Top_user_district_dict)
-    out =Top_user_district_dict_df.pivot(index=['top_user_years', 'top_user_state'], columns='top_user_district', values='registeredUsers')
-    print(out)
-
+    Top_user_district_dict_df=pl.DataFrame(Top_user_district_dict)
+    
+    #output=Top_user_district_dict_df.group_by('top_user_district').agg
+    #('top_reg_user_count','top_user_years')
+    #(pl.col("top_user_years")== 2020)
+    
     return Top_user_district_dict_df
 
-   
-
-#print(top_user_data())
+print(top_user_data())
 #7400 rows
 
 
