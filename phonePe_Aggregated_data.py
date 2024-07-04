@@ -7,8 +7,6 @@ import polars as pl
 
 
 
-
-
 # Function to get Aggregated_insurance:
 def agg_ins_data():
     
@@ -46,10 +44,7 @@ def agg_ins_data():
 
          
                     Agg_Insurance_df=pl.DataFrame(Insurance_agg_data)
-                    
-
-    #lazy_ins_query= (pl.LazyFrame(Insurance_agg_data))  
-    #print(lazy_ins_query)                  
+                                    
     return Agg_Insurance_df
 
 #insurance Dataframe   

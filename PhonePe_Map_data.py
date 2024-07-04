@@ -93,7 +93,7 @@ def map_user_data():
     return map_user_data_df
 
 #18300 rows    
-print(map_user_data())
+#print(map_user_data())
 
 
 
@@ -147,7 +147,7 @@ def map_ins_data():
     return map_ins_data_df
 
 #11559 rows
-print(map_ins_data())
+#print(map_ins_data())
 
 
 
