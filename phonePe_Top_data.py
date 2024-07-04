@@ -4,6 +4,7 @@ import json as js
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import polars as pl
 
 
 # Top_data >> Transaction:
@@ -118,9 +119,56 @@ top_ins_data_pincode_df=pd.DataFrame(top_ins_data_pincode_dict)
 
 #top_ins_data_pincode_df['Top_ins_pincode']=top_ins_data_pincode_df['Top_ins_pincode']=='600050' 
 #top_ins_data_pincode_df['Top_ins_state']=top_ins_data_pincode_df['Top_ins_state']=='tamil-nadu'
-print(top_ins_data_pincode_df)
+#print(top_ins_data_pincode_df)
 
 #top_ins_data_pincode_df.to_csv('top_ins_data_pincode.csv',index='False')
+
+
+
+
+#
+#top user data:
+
+Top_user_district_dict={ 'top_user_state':[],'top_user_district':[],'top_user_years':[],'top_user_qtr':[],'top_reg_user_count':[] }
+
+top_user_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/top/user/country/india/state/")
+#print(top_user_path)
+
+
+for top_user_states in top_user_path:
+    top_user_years_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/top/user/country/india/state"+"/"+top_user_states+"/")
+    #print(top_user_years_path)
+
+    for top_user_years in top_user_years_path:
+        top_user_file_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/top/user/country/india/state"+"/"+top_user_states+"/"+top_user_years+"/")
+
+        for top_user_files in top_user_file_path:
+            with open("/workspaces/Phonepe_Pulse_Data/pulse/data/top/user/country/india/state"+"/"+top_user_states+"/"+top_user_years+"/"+top_user_files,"r")as top_user_file:
+                top_user_file_data=js.load(top_user_file)
+                
+
+                #districts:    
+                for i in top_user_file_data['data']['districts']:
+                    Top_user_district_dict['top_user_district'].append(i['name'])
+                    Top_user_district_dict['top_reg_user_count'].append(i['registeredUsers'])
+                    Top_user_district_dict['top_user_state'].append(top_user_states)
+                    Top_user_district_dict['top_user_qtr'].append(int(top_user_files.strip(".json")))
+                    Top_user_district_dict['top_user_years'].append(top_user_years)
+
+
+
+Top_user_district_dict
+
+Top_user_district_dict_df=pl.DataFrame(Top_user_district_dict)
+
+
+#print(Top_user_district_dict_df)
+
+
+
+
+
+
 
 
 
