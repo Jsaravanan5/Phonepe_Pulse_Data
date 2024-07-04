@@ -50,46 +50,50 @@ def map_trx_data():
                     map_trx_data_df.to_csv("map_trx_data.csv",index="False")
     return map_trx_data_df
 
-print(map_trx_data())
+#print(map_trx_data())
 #18296 rows
 
 
 # Map User Data:
 
-#map_User_Dictionary:
-map_user_data_dict={'map_user_state':[],'map_user_dist':[],'map_user_years':[],'map_user_qtr':[],'map_reg_users':[],'map_app_opens':[]}
+def map_user_data():
 
-map_user_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/map/user/hover/country/india/state/")
-#print(map_user_path)
+    #map_User_Dictionary:
+    map_user_data_dict={'map_user_state':[],'map_user_dist':[],'map_user_years':[],'map_user_qtr':[],'map_reg_users':[],'map_app_opens':[]}
 
-for map_user_states in map_user_path:
-    map_user_years_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/map/user/hover/country/india/state/"+map_user_states+"/")
-    #print(map_user_years_path)
+    map_user_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/map/user/hover/country/india/state/")
+    #print(map_user_path)
 
-    for map_user_years in map_user_years_path:
-        map_user_file_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/map/user/hover/country/india/state/"+map_user_states+"/"+map_user_years+"/")
-        #print(map_user_file_path) 
+    for map_user_states in map_user_path:
+        map_user_years_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/map/user/hover/country/india/state/"+map_user_states+"/")
+        #print(map_user_years_path)
 
-        for map_user_file in map_user_file_path:
-            with open("/workspaces/Phonepe_Pulse_Data/pulse/data/map/user/hover/country/india/state/"+map_user_states+"/"+map_user_years+"/"+map_user_file,"r")as map_json_file:
-                map_user_json_data=js.load(map_json_file)  
-                #print(map_user_json_data)
-        
-                   
-                for i in map_user_json_data['data']['hoverData'].items():                    
-                     map_user_data_dict['map_user_dist'].append(i[0].strip("district"))
-                     map_user_data_dict['map_reg_users'].append(i[1]['registeredUsers'])
-                     map_user_data_dict['map_app_opens'].append(i[1]['appOpens'])
-                     map_user_data_dict['map_user_state'].append(map_user_states.replace("-"," "))
-                     map_user_data_dict['map_user_years'].append(map_user_years)
-                     map_user_data_dict['map_user_qtr'].append(int(map_user_file.strip(".json")))
+        for map_user_years in map_user_years_path:
+            map_user_file_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/map/user/hover/country/india/state/"+map_user_states+"/"+map_user_years+"/")
+            #print(map_user_file_path) 
+
+            for map_user_file in map_user_file_path:
+                with open("/workspaces/Phonepe_Pulse_Data/pulse/data/map/user/hover/country/india/state/"+map_user_states+"/"+map_user_years+"/"+map_user_file,"r")as map_json_file:
+                    map_user_json_data=js.load(map_json_file)  
+                    #print(map_user_json_data)
+            
+                    
+                    for i in map_user_json_data['data']['hoverData'].items():                    
+                        map_user_data_dict['map_user_dist'].append(i[0].strip("district"))
+                        map_user_data_dict['map_reg_users'].append(i[1]['registeredUsers'])
+                        map_user_data_dict['map_app_opens'].append(i[1]['appOpens'])
+                        map_user_data_dict['map_user_state'].append(map_user_states.replace("-"," "))
+                        map_user_data_dict['map_user_years'].append(map_user_years)
+                        map_user_data_dict['map_user_qtr'].append(int(map_user_file.strip(".json")))
 
 
-#Map_User_Dataframe:
-map_user_data_df=pd.DataFrame(map_user_data_dict)
-#print(map_user_data_df)
-#18300 rows
+    #Map_User_Dataframe:
+        map_user_data_df=pl.DataFrame(map_user_data_dict)
 
+    return map_user_data_df
+
+#18300 rows    
+print(map_user_data())
 
 
 
@@ -100,46 +104,50 @@ map_user_data_df=pd.DataFrame(map_user_data_dict)
 
 #Map_insurance:
 
+def map_ins_data():
 
-#map Insurance Dictionary:
-map_ins_data_dict={'map_ins_state':[],'map_ins_dist':[],'map_ins_years':[],'map_ins_qtr':[],'map_ins_amount':[],'map_ins_count':[] }
+    #map Insurance Dictionary:
+    map_ins_data_dict={'map_ins_state':[],'map_ins_dist':[],'map_ins_years':[],'map_ins_qtr':[],'map_ins_amount':[],'map_ins_count':[] }
 
-map_ins_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/map/insurance/hover/country/india/state/")
-#print(map_ins_path)
+    map_ins_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/map/insurance/hover/country/india/state/")
+    #print(map_ins_path)
 
-for map_ins_states in map_ins_path:
-    map_ins_years_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/map/insurance/hover/country/india/state/"+map_ins_states+"/")
-    #print(map_ins_years_path)
+    for map_ins_states in map_ins_path:
+        map_ins_years_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/map/insurance/hover/country/india/state/"+map_ins_states+"/")
+        #print(map_ins_years_path)
 
-    for map_ins_years in map_ins_years_path:
-        map_ins_file_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/map/insurance/hover/country/india/state/"+map_ins_states+"/"+map_ins_years+"/")
-        #print(map_ins_file_path) 
+        for map_ins_years in map_ins_years_path:
+            map_ins_file_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/map/insurance/hover/country/india/state/"+map_ins_states+"/"+map_ins_years+"/")
+            #print(map_ins_file_path) 
 
-        for map_ins_file in map_ins_file_path:
-            with open("/workspaces/Phonepe_Pulse_Data/pulse/data/map/insurance/hover/country/india/state/"+map_ins_states+"/"+map_ins_years+"/"+map_ins_file,"r")as map_json_file:
-                map_ins_json_data=js.load(map_json_file)  
-            
+            for map_ins_file in map_ins_file_path:
+                with open("/workspaces/Phonepe_Pulse_Data/pulse/data/map/insurance/hover/country/india/state/"+map_ins_states+"/"+map_ins_years+"/"+map_ins_file,"r")as map_json_file:
+                    map_ins_json_data=js.load(map_json_file)  
+                
 
-            for i in map_ins_json_data['data']['hoverDataList']:
-                map_ins_dist=[i][0]['name']
-                map_ins_count=[i][0]['metric'][0]['count']
-                map_ins_amt=[i][0]['metric'][0]['amount']
-                map_ins_data_dict['map_ins_state'].append(map_ins_states.replace("-"," "))
-                map_ins_data_dict['map_ins_dist'].append(map_ins_dist.strip("district"))
-                map_ins_data_dict['map_ins_years'].append(map_ins_years)
-                map_ins_data_dict['map_ins_qtr'].append(int(map_ins_file.strip(".json")))
-                map_ins_data_dict['map_ins_amount'].append(map_ins_amt)
-                #print(map_trx_data['map_trx_amount'])
-                map_ins_data_dict['map_ins_count'].append(map_ins_count)
+                for i in map_ins_json_data['data']['hoverDataList']:
+                    map_ins_dist=[i][0]['name']
+                    map_ins_count=[i][0]['metric'][0]['count']
+                    map_ins_amt=[i][0]['metric'][0]['amount']
+                    map_ins_data_dict['map_ins_state'].append(map_ins_states.replace("-"," "))
+                    map_ins_data_dict['map_ins_dist'].append(map_ins_dist.strip("district"))
+                    map_ins_data_dict['map_ins_years'].append(map_ins_years)
+                    map_ins_data_dict['map_ins_qtr'].append(int(map_ins_file.strip(".json")))
+                    map_ins_data_dict['map_ins_amount'].append(map_ins_amt)
+                    #print(map_trx_data['map_trx_amount'])
+                    map_ins_data_dict['map_ins_count'].append(map_ins_count)
 
 
 
-#Map_insurance_dataframe:
+    #Map_insurance_dataframe:
 
-map_ins_data_df=pd.DataFrame(map_ins_data_dict)
-#map_ins_data_df.to_csv('map_ins_data.csv',index='False')
-#print(map_ins_data_df)
+    map_ins_data_df=pd.DataFrame(map_ins_data_dict)
+    #map_ins_data_df.to_csv('map_ins_data.csv',index='False')
+    #print(map_ins_data_df)
+    return map_ins_data_df
+
 #11559 rows
+print(map_ins_data())
 
 
 
