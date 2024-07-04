@@ -39,7 +39,7 @@ for top_trx_states in top_trx_path:
                     top_trx_data_dist_dict['top_trx_dist_amount'].append(round(top_trx_dist_amt,2))  #round-off
                     top_trx_data_dist_dict['Top_trx_years'].append(top_trx_years)
                     top_trx_data_dist_dict['Top_trx_qtr'].append(int(top_trx_files.strip(".json")))
-                    top_trx_data_dist_dict['Top_trx_states'].append(top_trx_states)
+                    top_trx_data_dist_dict['Top_trx_states'].append(top_trx_states.replace("-"," "))
                     
                     
                 for i in top_json_file_data['data']['pincodes']:
@@ -49,7 +49,7 @@ for top_trx_states in top_trx_path:
                     top_trx_data_pincode_dict['top_trx_pincodes_amount'].append(round(top_trx_pincodes_amt,2))
                     top_trx_data_pincode_dict['Top_trx_years'].append(top_trx_years)
                     top_trx_data_pincode_dict['Top_trx_qtr'].append(int(top_trx_files.strip(".json")))
-                    top_trx_data_pincode_dict['Top_trx_states'].append(top_trx_states)
+                    top_trx_data_pincode_dict['Top_trx_states'].append(top_trx_states.replace("-"," "))
                        
 
 #top Transaction District Dataframe:
@@ -91,7 +91,7 @@ for top_ins_states in top_ins_path:
                     top_ins_data_dist_dict['Top_ins_dist'].append(i['entityName'])
                     top_ins_data_dist_dict['Top_ins_count'].append(i['metric']['count'])
                     top_ins_data_dist_dict['Top_ins_amount'].append(round(i['metric']['amount'],2))
-                    top_ins_data_dist_dict['Top_ins_state'].append(top_ins_states)
+                    top_ins_data_dist_dict['Top_ins_state'].append(top_ins_states.replace("-"," "))
                     top_ins_data_dist_dict['Top_ins_qtr'].append(int(top_ins_files.strip(".json")))
                     top_ins_data_dist_dict['Top_ins_year'].append(top_ins_years)
 
@@ -101,7 +101,7 @@ for top_ins_states in top_ins_path:
                     top_ins_data_pincode_dict['Top_ins_pincode'].append(i['entityName'])
                     top_ins_data_pincode_dict['Top_ins_count'].append(i['metric']['count'])
                     top_ins_data_pincode_dict['Top_ins_amount'].append(round(i['metric']['amount'],2))
-                    top_ins_data_pincode_dict['Top_ins_state'].append(top_ins_states)
+                    top_ins_data_pincode_dict['Top_ins_state'].append(top_ins_states.replace("-"," "))
                     top_ins_data_pincode_dict['Top_ins_qtr'].append(int(top_ins_files.strip(".json")))
                     top_ins_data_pincode_dict['Top_ins_year'].append(top_ins_years)
 
@@ -151,7 +151,7 @@ for top_user_states in top_user_path:
                 for i in top_user_file_data['data']['districts']:
                     Top_user_district_dict['top_user_district'].append(i['name'])
                     Top_user_district_dict['top_reg_user_count'].append(i['registeredUsers'])
-                    Top_user_district_dict['top_user_state'].append(top_user_states)
+                    Top_user_district_dict['top_user_state'].append(top_user_states.replace("-"," "))
                     Top_user_district_dict['top_user_qtr'].append(int(top_user_files.strip(".json")))
                     Top_user_district_dict['top_user_years'].append(top_user_years)
 
