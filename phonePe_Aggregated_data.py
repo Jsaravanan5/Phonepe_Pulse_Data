@@ -203,20 +203,21 @@ mysql_database = "phonepedatabase"
 mysql_port = "3306"  
 
 
-#def connect_to_mysql():
-#    try:
-#       db_connect = mysql.connector.connect(
-#            host=mysql_host,
-#           user=mysql_user,
-#            password=mysql_password,
-#            database=mysql_database,
-#            port=mysql_port
-#        )
-#       print("Connected to MySQL database successfully")
-#       return db_connect
-#    except mysql.connector.Error as e:
-#       print("Error connecting to MySQL database:", e)
-#       return None
+def connect_to_mysql():
+    try:
+        db_connect = mysql.connector.connect(
+           host=mysql_host,
+          user=mysql_user,
+           password=mysql_password,
+           database=mysql_database,
+          port=mysql_port
+        )
+        print("Connected to MySQL database successfully")
+        return db_connect
+
+    except mysql.connector.Error as e:
+       print("Error connecting to MySQL database:", e)
+       return None
 
 
 def create_tables(db_connect):
@@ -268,7 +269,6 @@ def create_tables(db_connect):
         cursor.execute(agg_trx_data)
         cursor.execute(agg_ins_data)
         cursor.execute(agg_user_data)
-        
 
         db_connect.commit()
         print("Tables created successfully in MySQL")
@@ -346,6 +346,20 @@ def insert_agg_user_func_to_mysql(db_connect, agg_user_func):
     finally:
         cursor.close()
 
+
+ # Establishing connection to MySQL database
+db_connect = connect_to_mysql()
+# Creating tables if they don't exist
+if db_connect is not None:
+    create_tables(db_connect)
+# Inserting data into MySQL tables
+    insert_agg_trx_data_to_mysql(db_connect,agg_trx_func)
+    insert_agg_ins_func_to_mysql(db_connect, agg_ins_func)
+    insert_agg_user_func_to_mysql(db_connect, agg_user_func)
+else:
+    st.write("Aggregate information not inserted into tables Succesfully ")
+    # Closing the MySQL connection
+db_connect.close()
 
 
 
