@@ -2,8 +2,10 @@ import os
 import json as js
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
 import polars as pl
+import mysql.connector
+import streamlit as st
+import plotly.express as px 
 
 
 
@@ -40,24 +42,25 @@ def agg_ins_data():
                     Insurance_agg_data['Ins_Qtr'].append(int(file.strip(".json")))
                     Insurance_agg_data['Ins_txn_type'].append(agg_ins_txn_type)
                     Insurance_agg_data['Ins_txn_count'].append(agg_ins_txn_count)
-                    Insurance_agg_data['Ins_txn_amount'].append(agg_ins_txn_amount)
+                    Insurance_agg_data['Ins_txn_amount'].append(int(agg_ins_txn_amount))
 
-         
+    
                     Agg_Insurance_df=pl.DataFrame(Insurance_agg_data)
+
                                     
     return Agg_Insurance_df
 
 #insurance Dataframe   
 #574
-#print(agg_ins_data())
+print(agg_ins_data())
 
 
 def agg_user_data():
     #Agg_User_Data_Dictionary:
     user_agg_data= {
-                     "User_Ins_States":[],
-                     "User_Ins_Years":[],
-                     "User_Ins_Qtr":[],
+                     "User_States":[],
+                     "User_Years":[],
+                     "User_Qtr":[],
                      "User_Device_Brand":[],
                      "User_Device_count":[],
                      "User_Device_percent":[]
@@ -89,9 +92,9 @@ def agg_user_data():
                         user_agg_data["User_Device_Brand"].append(agg_user_device_brand)
                         user_agg_data["User_Device_count"].append(agg_user_device_count)
                         user_agg_data["User_Device_percent"].append(float(agg_user_device_percent*100))
-                        user_agg_data['User_Ins_States'].append(user_states.replace("-"," "))
-                        user_agg_data["User_Ins_Years"].append(int(user_years))
-                        user_agg_data["User_Ins_Qtr"].append(int(file.strip(".json")))
+                        user_agg_data['User_States'].append(user_states.replace("-"," "))
+                        user_agg_data["User_Years"].append(int(user_years))
+                        user_agg_data["User_Qtr"].append(int(file.strip(".json")))
 
 
     #User DataFrame                
@@ -101,6 +104,48 @@ def agg_user_data():
 
 #print(agg_user_data())
 #6732
+
+#question:
+#1. agg_txn
+#  1.1 which state has more
+#  
+#1. agg_ins
+#1. agg_ins
+#
+
+#creating a phonepe Database:
+
+#mydb = mysql.connector.connect(
+# host="localhost",
+# user="sqluser",
+ #password="password"
+#)
+#mycursor = mydb.cursor()
+#mycursor.execute("CREATE DATABASE phonepedatabase")
+
+#MySQL connection configuration
+mysql_host = "localhost"
+mysql_user = "sqluser"
+mysql_password = "password"
+mysql_database = "phonepedatabase"
+mysql_port = "3306"  
+
+
+#def connect_to_mysql():
+#    try:
+#       conn = mysql.connector.connect(
+#            host=mysql_host,
+#           user=mysql_user,
+#            password=mysql_password,
+#            database=mysql_database,
+#            port=mysql_port
+#        )
+#       print("Connected to MySQL database successfully")
+#       return conn
+#    except mysql.connector.Error as e:
+#       print("Error connecting to MySQL database:", e)
+#       return None
+
 
 
 

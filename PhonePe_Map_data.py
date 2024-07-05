@@ -6,8 +6,10 @@ import os
 import json as js
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
 import polars as pl
+import mysql.connector
+import streamlit as st
+import plotly.express as px
 
 
 
@@ -40,14 +42,13 @@ def map_trx_data():
                         map_trx_data_dict['map__trx_dist'].append(map_trx_dist.strip("district"))
                         map_trx_data_dict['map_trx_years'].append(int(map_trx_years))
                         map_trx_data_dict['map_trx_qtr'].append(int(map_trx_file.strip(".json")))
-                        map_trx_data_dict['map_trx_amount'].append(map_trx_amt)
-                        #print(map_trx_data['map_trx_amount'])
+                        map_trx_data_dict['map_trx_amount'].append(int(map_trx_amt))
                         map_trx_data_dict['map_trx_count'].append(map_trx_count)
 
 
                     #Map_Transaction_Dataframe:
                     map_trx_data_df=pd.DataFrame(map_trx_data_dict)
-                    map_trx_data_df.to_csv("map_trx_data.csv",index="False")
+                    #map_trx_data_df.to_csv("map_trx_data.csv",index="False")
     return map_trx_data_df
 
 #print(map_trx_data())
@@ -133,8 +134,7 @@ def map_ins_data():
                     map_ins_data_dict['map_ins_dist'].append(map_ins_dist.strip("district"))
                     map_ins_data_dict['map_ins_years'].append(int(map_ins_years))
                     map_ins_data_dict['map_ins_qtr'].append(int(map_ins_file.strip(".json")))
-                    map_ins_data_dict['map_ins_amount'].append(map_ins_amt)
-                    #print(map_trx_data['map_trx_amount'])
+                    map_ins_data_dict['map_ins_amount'].append(int(map_ins_amt))
                     map_ins_data_dict['map_ins_count'].append(map_ins_count)
 
 
