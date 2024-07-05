@@ -266,9 +266,9 @@ def create_tables(db_connect):
 
     try:
         # Execute table creation queries
-        cursor.execute(agg_trx_data)
-        cursor.execute(agg_ins_data)
-        cursor.execute(agg_user_data)
+        cursor.execute(AGG_TRX_table_query)
+        cursor.execute(AGG_INS_table_query)
+        cursor.execute(AGG_USER_table_query)
 
         db_connect.commit()
         print("Tables created successfully in MySQL")
@@ -345,6 +345,16 @@ def insert_agg_user_func_to_mysql(db_connect, agg_user_func):
         db_connect.rollback()
     finally:
         cursor.close()
+
+
+st.title(":blue[PHONEPE AGRREGATED INFORMATION]")
+st.write("This page will provide you the aggregated phonepe pulse data(transaction,insurance,user) and its insights")
+                    
+
+#channel_id_input_placeholder = 'channel_id_input'
+#channel_id = st.text_input('Enter your ', key=channel_id_input_placeholder)
+#if len(channel_id)>0:
+#if st.button("Import Youtube Channel Details"):
 
 
  # Establishing connection to MySQL database
