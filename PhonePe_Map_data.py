@@ -38,7 +38,7 @@ def map_trx_data():
                         map_trx_amt=[i][0]['metric'][0]['amount']
                         map_trx_data_dict['map_trx_state'].append(map_trx_states.replace("-"," "))
                         map_trx_data_dict['map__trx_dist'].append(map_trx_dist.strip("district"))
-                        map_trx_data_dict['map_trx_years'].append(map_trx_years)
+                        map_trx_data_dict['map_trx_years'].append(int(map_trx_years))
                         map_trx_data_dict['map_trx_qtr'].append(int(map_trx_file.strip(".json")))
                         map_trx_data_dict['map_trx_amount'].append(map_trx_amt)
                         #print(map_trx_data['map_trx_amount'])
@@ -83,7 +83,7 @@ def map_user_data():
                         map_user_data_dict['map_reg_users'].append(i[1]['registeredUsers'])
                         map_user_data_dict['map_app_opens'].append(i[1]['appOpens'])
                         map_user_data_dict['map_user_state'].append(map_user_states.replace("-"," "))
-                        map_user_data_dict['map_user_years'].append(map_user_years)
+                        map_user_data_dict['map_user_years'].append(int(map_user_years))
                         map_user_data_dict['map_user_qtr'].append(int(map_user_file.strip(".json")))
 
 
@@ -131,7 +131,7 @@ def map_ins_data():
                     map_ins_amt=[i][0]['metric'][0]['amount']
                     map_ins_data_dict['map_ins_state'].append(map_ins_states.replace("-"," "))
                     map_ins_data_dict['map_ins_dist'].append(map_ins_dist.strip("district"))
-                    map_ins_data_dict['map_ins_years'].append(map_ins_years)
+                    map_ins_data_dict['map_ins_years'].append(int(map_ins_years))
                     map_ins_data_dict['map_ins_qtr'].append(int(map_ins_file.strip(".json")))
                     map_ins_data_dict['map_ins_amount'].append(map_ins_amt)
                     #print(map_trx_data['map_trx_amount'])

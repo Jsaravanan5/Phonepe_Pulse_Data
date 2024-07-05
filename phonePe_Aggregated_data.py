@@ -36,7 +36,7 @@ def agg_ins_data():
                     agg_ins_txn_count=data['paymentInstruments'][0]['count']
                     agg_ins_txn_amount=data['paymentInstruments'][0]['amount']
                     Insurance_agg_data['Ins_States'].append(ins_states.replace("-"," "))
-                    Insurance_agg_data['Ins_Years'].append(ins_years)
+                    Insurance_agg_data['Ins_Years'].append(int(ins_years))
                     Insurance_agg_data['Ins_Qtr'].append(int(file.strip(".json")))
                     Insurance_agg_data['Ins_txn_type'].append(agg_ins_txn_type)
                     Insurance_agg_data['Ins_txn_count'].append(agg_ins_txn_count)
@@ -50,8 +50,6 @@ def agg_ins_data():
 #insurance Dataframe   
 #574
 #print(agg_ins_data())
-
-    
 
 
 def agg_user_data():
@@ -92,16 +90,26 @@ def agg_user_data():
                         user_agg_data["User_Device_count"].append(agg_user_device_count)
                         user_agg_data["User_Device_percent"].append(float(agg_user_device_percent*100))
                         user_agg_data['User_Ins_States'].append(user_states.replace("-"," "))
-                        user_agg_data["User_Ins_Years"].append(user_years)
+                        user_agg_data["User_Ins_Years"].append(int(user_years))
                         user_agg_data["User_Ins_Qtr"].append(int(file.strip(".json")))
 
 
     #User DataFrame                
     Agg_Users_df=pl.DataFrame(user_agg_data) 
+
     return Agg_Users_df               
 
 #print(agg_user_data())
 #6732
+
+
+
+
+
+
+
+
+
 
 
 

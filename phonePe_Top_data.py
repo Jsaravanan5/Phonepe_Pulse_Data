@@ -38,7 +38,7 @@ def top_trx_data():
                         top_trx_data_dist_dict['top_trx_dist_count'].append(i['metric']['count'])
                         top_trx_dist_amt=i['metric']['amount']
                         top_trx_data_dist_dict['top_trx_dist_amount'].append(round(top_trx_dist_amt,2))  #round-off
-                        top_trx_data_dist_dict['Top_trx_years'].append(top_trx_years)
+                        top_trx_data_dist_dict['Top_trx_years'].append(int(top_trx_years))
                         top_trx_data_dist_dict['Top_trx_qtr'].append(int(top_trx_files.strip(".json")))
                         top_trx_data_dist_dict['Top_trx_states'].append(top_trx_states.replace("-"," "))
                         
@@ -48,7 +48,7 @@ def top_trx_data():
                         top_trx_data_pincode_dict['top_trx_pincodes_count'].append(i['metric']['count'])
                         top_trx_pincodes_amt=i['metric']['amount']
                         top_trx_data_pincode_dict['top_trx_pincodes_amount'].append(round(top_trx_pincodes_amt,2))
-                        top_trx_data_pincode_dict['Top_trx_years'].append(top_trx_years)
+                        top_trx_data_pincode_dict['Top_trx_years'].append(int(top_trx_years))
                         top_trx_data_pincode_dict['Top_trx_qtr'].append(int(top_trx_files.strip(".json")))
                         top_trx_data_pincode_dict['Top_trx_states'].append(top_trx_states.replace("-"," "))
                         
@@ -62,7 +62,7 @@ def top_trx_data():
     Top_trx_pincode_df=pd.DataFrame(top_trx_data_pincode_dict)
     #print(Top_trx_pincode_df)
     #8924 rows
-    return (Top_trx_dist_data_df,Top_trx_pincode_df)
+    return (Top_trx_dist_data_df)
 
 #print(top_trx_data())
 
@@ -102,7 +102,7 @@ def top_ins_data():
                         top_ins_data_dist_dict['Top_ins_amount'].append(round(i['metric']['amount'],2))
                         top_ins_data_dist_dict['Top_ins_state'].append(top_ins_states.replace("-"," "))
                         top_ins_data_dist_dict['Top_ins_qtr'].append(int(top_ins_files.strip(".json")))
-                        top_ins_data_dist_dict['Top_ins_year'].append(top_ins_years)
+                        top_ins_data_dist_dict['Top_ins_year'].append(int(top_ins_years))
 
 
                     #pincodes
@@ -112,7 +112,7 @@ def top_ins_data():
                         top_ins_data_pincode_dict['Top_ins_amount'].append(round(i['metric']['amount'],2))
                         top_ins_data_pincode_dict['Top_ins_state'].append(top_ins_states.replace("-"," "))
                         top_ins_data_pincode_dict['Top_ins_qtr'].append(int(top_ins_files.strip(".json")))
-                        top_ins_data_pincode_dict['Top_ins_year'].append(top_ins_years)
+                        top_ins_data_pincode_dict['Top_ins_year'].append(int(top_ins_years))
 
 
     #Top _insurance_dict
