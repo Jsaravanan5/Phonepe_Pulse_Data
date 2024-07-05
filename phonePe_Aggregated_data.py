@@ -9,8 +9,77 @@ import plotly.express as px
 
 
 
+
+
+#Function to get Aggregated_Transaction:
+
+def agg_trx_func():
+
+    # Insurance_dictionary to capture the information:
+    agg_trx_data_dict={ "Trx_States":[],"Trx_Years":[],"Trx_Qtr":[],"Agg_txn_type":[],"Agg_txn_count":[],"Agg_txn_amount":[] 
+                    } 
+
+    ins_states_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/aggregated/transaction/country/india/state/")
+    agg_ins_path=list(ins_states_path)
+    #print(agg_ins_path)
+
+    for trx_states in agg_ins_path:
+        agg_ins_years_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/aggregated/transaction/country/india/state/"+trx_states+"/")
+        #print(ins_years_path)
+
+        for  trx_years in agg_ins_years_path:
+            agg_ins_file_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/aggregated/transaction/country/india/state/"+trx_states+"/"+trx_years+"/")
+            #print(agg_ins_file_path)
+
+            for file in agg_ins_file_path:
+                with open("/workspaces/Phonepe_Pulse_Data/pulse/data/aggregated/transaction/country/india/state/"+trx_states+"/"+trx_years+"/"+file,"r") as json_file :
+                    agg_json_txn_file=js.load(json_file)
+                    
+                
+                for i in agg_json_txn_file['data']['transactionData']:
+                    agg_txn_type=i['name']
+                    agg_txn_count=i['paymentInstruments'][0]['count']
+                    agg_txn_amount=i['paymentInstruments'][0]['amount']
+                    agg_trx_data_dict['Trx_States'].append(trx_states.replace("-"," "))
+                    agg_trx_data_dict['Trx_Years'].append(int(trx_years))
+                    agg_trx_data_dict['Trx_Qtr'].append(int(file.strip(".json")))
+                    agg_trx_data_dict['Agg_txn_type'].append(agg_txn_type)
+                    agg_trx_data_dict['Agg_txn_count'].append(agg_txn_count)
+                    agg_trx_data_dict['Agg_txn_amount'].append(int(agg_txn_amount))
+                    
+                    
+                    Agg_trx_df=pl.DataFrame(agg_trx_data_dict)
+
+
+    agg_trx_df = Agg_trx_df
+    #fig = px.bar(agg_trx_df, x="Agg_txn_type", y="Agg_txn_count", title="Aggregated_Transaction")
+    #fig=px.sunburst(agg_trx_df, path=['Agg_txn_type', 'Trx_States','Trx_Years','Trx_Qtr'], values='Agg_txn_count')
+    #fig = px.line(agg_trx_df, x="Trx_Years", y="Agg_txn_count", title="Aggregated_Transaction")
+    #fig = px.pie(agg_trx_df, names="Trx_States", values="Agg_txn_count", title="Aggregated_Transaction")
+    # values='pop', names='country'
+    #fig.show() 
+    #st.bar_chart(data=agg_trx_df,x='Agg_txn_type',y='Agg_txn_count', color="#f0f", width=400, height=400, use_container_width=True)
+                                   
+    return Agg_trx_df
+
+#4496
+#print(agg_trx_func())
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
 # Function to get Aggregated_insurance:
-def agg_ins_data():
+def agg_ins_func():
     
     # Insurance_dictionary to capture the information:
     Insurance_agg_data={ "Ins_States":[],"Ins_Years":[],"Ins_Qtr":[],"Ins_txn_type":[],"Ins_txn_count":[],"Ins_txn_amount":[] 
@@ -52,10 +121,10 @@ def agg_ins_data():
 
 #insurance Dataframe   
 #574
-print(agg_ins_data())
+#print(agg_ins_func())
 
 
-def agg_user_data():
+def agg_user_func():
     #Agg_User_Data_Dictionary:
     user_agg_data= {
                      "User_States":[],
@@ -95,14 +164,17 @@ def agg_user_data():
                         user_agg_data['User_States'].append(user_states.replace("-"," "))
                         user_agg_data["User_Years"].append(int(user_years))
                         user_agg_data["User_Qtr"].append(int(file.strip(".json")))
+                        
 
 
     #User DataFrame                
     Agg_Users_df=pl.DataFrame(user_agg_data) 
 
+ 
+
     return Agg_Users_df               
 
-#print(agg_user_data())
+print(agg_user_func())
 #6732
 
 #question:
@@ -133,7 +205,7 @@ mysql_port = "3306"
 
 #def connect_to_mysql():
 #    try:
-#       conn = mysql.connector.connect(
+#       db_connect = mysql.connector.connect(
 #            host=mysql_host,
 #           user=mysql_user,
 #            password=mysql_password,
@@ -141,10 +213,139 @@ mysql_port = "3306"
 #            port=mysql_port
 #        )
 #       print("Connected to MySQL database successfully")
-#       return conn
+#       return db_connect
 #    except mysql.connector.Error as e:
 #       print("Error connecting to MySQL database:", e)
 #       return None
+
+
+def create_tables(db_connect):
+    #Creating a cursor object using the cursor() method
+    
+    cursor=db_connect.cursor()
+     # Table creation queries
+    AGG_TRX_table_query = """
+    CREATE TABLE IF NOT EXISTS agg_trx_data (
+        Tranasction_Type_Id INT NOT NULL AUTO_INCREMENT,
+        Transaction_Type VARCHAR(255),
+        Transaction_States VARCHAR(255),
+        Transaction_Years INT,
+        Transaction_Quarter INT,
+        Transaction_Count INT,
+        Transaction_Amount INT,
+        PRIMARY KEY(Agg_txn_type_Id)
+    
+    )
+    """
+    AGG_INS_table_query = """
+    CREATE TABLE IF NOT EXISTS agg_ins_data (
+        Tranasction_Type_Id INT NOT NULL AUTO_INCREMENT,
+        Transaction_Type VARCHAR(255),
+        Insurance_States VARCHAR(255),
+        Insurance_Years INT,
+        Insurance_Quarter INT,
+        Insurance_Count INT,
+        Insurance_Amount INT,        
+        PRIMARY KEY(Tranasction_Type_Id)
+    )
+    """
+
+    AGG_USER_table_query = """
+    CREATE TABLE IF NOT EXISTS agg_user_data (
+        User_Device_Brand_Id INT NOT NULL AUTO_INCREMENT,
+        User_Device_Brand VARCHAR(255),
+        User_States VARCHAR(255),
+        User_Years INT,
+        User_Quarter INT,
+        User_Device_Count INT,
+        User_Device_Percent FLOAT,
+        PRIMARY KEY(User_Device_Brand_Id)
+    )
+    """
+
+    try:
+        # Execute table creation queries
+        cursor.execute(agg_trx_data)
+        cursor.execute(agg_ins_data)
+        cursor.execute(agg_user_data)
+        
+
+        db_connect.commit()
+        print("Tables created successfully in MySQL")
+    except mysql.connector.Error as e:
+        print("Error creating tables in MySQL:", e)
+        db_connect.rollback()
+    finally:
+        cursor.close()
+
+
+#Table Data_Insert:
+
+def insert_agg_trx_data_to_mysql(db_connect,agg_trx_func):
+    cursor = db_connect.cursor()
+    try:
+        for i in agg_trx_func:
+            
+            insert_query = """
+            INSERT INTO  (Transaction_Type,Transaction_States,Transaction_Years,Transaction_Quarter,Transaction_Count,Transaction_Amount) 
+            VALUES (%s, %s, %s, %s, %s, %s)
+            """
+            # Execute the query with data from the aggregated transaction_data
+            cursor.execute(insert_query, (i["Transaction_Type"], i["Transaction_States"], i["Transaction_Years"], i["Transaction_Quarter"], i["Transaction_Count"], i["Transaction_Amount"]))
+        
+        db_connect.commit()
+        return "Success"
+    except mysql.connector.Error as e:
+        return "Duplicate"
+        db_connect.rollback()
+    finally:
+        cursor.close()
+
+
+
+def insert_agg_ins_func_to_mysql(db_connect, agg_ins_func):
+    cursor = db_connect.cursor()
+    try:
+        for i in agg_ins_func:
+            
+            insert_query = """
+            INSERT INTO agg_ins_data (Transaction_Type,Insurance_States,Insurance_Years,Insurance_Quarter,Insurance_Count,Insurance_Amount) 
+            VALUES (%s, %s, %s, %s, %s, %s)
+            """
+            # Execute the query with data from the channel_info list
+            cursor.execute(insert_query, (i["Transaction_Type"], i["Insurance_States"], i["Insurance_Years"], i["Insurance_Quarter"], i["Insurance_Count"], i["Insurance_Amount"]))
+        
+        db_connect.commit()
+        return "Success"
+    except mysql.connector.Error as e:
+        return "Duplicate"
+        db_connect.rollback()
+    finally:
+        cursor.close()
+
+
+
+
+def insert_agg_user_func_to_mysql(db_connect, agg_user_func):
+    cursor = db_connect.cursor()
+    try:
+        for i in agg_user_func:
+            
+            insert_query = """
+            INSERT INTO agg_ins_data (User_Device_Brand,User_States,User_Years,User_Quarter,User_Device_Count,User_Device_Amount) 
+            VALUES (%s, %s, %s, %s, %s, %s)
+            """
+            # Execute the query with data from the channel_info list
+            cursor.execute(insert_query, (i["User_Device_Brand"], i["User_States"], i["User_Years"], i["User_Quarter"], i["User_Device_Count"], i["User_Device_Amount"]))
+        
+        db_connect.commit()
+        return "Success"
+    except mysql.connector.Error as e:
+        return "Duplicate"
+        db_connect.rollback()
+    finally:
+        cursor.close()
+
 
 
 
