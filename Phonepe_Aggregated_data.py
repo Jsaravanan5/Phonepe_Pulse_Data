@@ -306,8 +306,8 @@ engine=create_engine("mysql+mysqlconnector://sqluser:password@localhost/phoneped
 # df.to_sql('table name', con=engine, if_exists='append', index=False)
 
 #agg_trx_func().to_sql('agg_trx_data', con=engine, if_exists='append', index=False)
-#print(agg_trx_func())
 
+#print(agg_trx_func())
 #-----------------------------------------------------------------------
 #Step 4: Insert the data into the MySQL table (Not Required)
 #mycursor = mydb.cursor()
@@ -327,9 +327,9 @@ def insert_agg_trx_data_to_mysql(db_connect,agg_trx_func):
         for i in agg_trx_func:
             
             insert_query = """
-            INSERT INTO  (Transaction_Type,Transaction_States,Transaction_Years,Transaction_Quarter,Transaction_Count,Transaction_Amount) 
-            VALUES (%s, %s, %s, %s, %s, %s)
-            """
+#            INSERT INTO  (Transaction_Type,Transaction_States,Transaction_Years,Transaction_Quarter,Transaction_Count,Transaction_Amount) 
+#           VALUES (%s, %s, %s, %s, %s, %s)
+#           """
             # Execute the query with data from the aggregated transaction_data
             cursor.execute(insert_query, (i["Transaction_Type"], i["Transaction_States"], i["Transaction_Years"], i["Transaction_Quarter"], i["Transaction_Count"], i["Transaction_Amount"]))
         
@@ -410,7 +410,6 @@ else:
     st.write("Aggregate information not inserted into tables Succesfully ")
     # Closing the MySQL connection
 db_connect.close()
-
 
 
 
