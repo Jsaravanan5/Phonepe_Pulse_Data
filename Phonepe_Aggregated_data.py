@@ -280,7 +280,46 @@ def create_tables(db_connect):
 
 
 #Table Data_Insert:
+#insert Panda Data frame into MYSQL as  
+#link as follows: https://saturncloud.io/blog/writing-a-pandas-dataframe-to-mysql/
 
+# Code Addition:
+#Import Necessary Library: 
+from sqlalchemy import create_engine
+
+
+# Step 1: Create a DataFrame with the data
+#data = {'name': ['Alice', 'Bob'],
+#        'address': ['Street 123', 'Avenue 456']}
+#df = pd.DataFrame(data)
+
+#function that return the Pandas Dataframe:
+# agg_trx_func() 
+
+# Step 2: Create a SQLAlchemy engine to connect to the MySQL database
+# engine = create_engine("mysql+mysqlconnector://root:new_password@localhost/mydatabase")
+
+#engine=create_engine("mysql+mysqlconnector://sqluser:password@localhost/phonepedatabase")
+
+# Step 3: Convert the Pandas DataFrame to a format for MySQL table insertion
+# df.to_sql('agg_trx_data', con=engine, if_exists='append', index=False)
+
+#Step 4: Insert the data into the MySQL table
+#mycursor = mydb.cursor()
+
+#sql = "INSERT INTO customers (name, address) VALUES (%s, %s)"
+#val = ("John", "Highway 21")
+
+#mycursor.execute(sql, val)
+
+#mydb.commit()
+#print(mycursor.rowcount, "record inserted.")
+
+
+
+
+
+---------------------------------------------------------------
 def insert_agg_trx_data_to_mysql(db_connect,agg_trx_func):
     cursor = db_connect.cursor()
     try:
