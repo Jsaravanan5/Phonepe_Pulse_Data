@@ -174,7 +174,7 @@ def agg_user_func():
 
     return Agg_Users_df               
 
-print(agg_user_func())
+#print(agg_user_func())
 #6732
 
 #question:
@@ -300,15 +300,15 @@ from sqlalchemy import create_engine
 # Step 2: Create a SQLAlchemy engine to connect to the MySQL database
 # engine = create_engine("mysql+mysqlconnector://root:new_password@localhost/mydatabase")
 
-#engine=create_engine("mysql+mysqlconnector://sqluser:password@localhost/phonepedatabase")
+engine=create_engine("mysql+mysqlconnector://sqluser:password@localhost/phonepedatabase")
 
 # Step 3: Convert the Pandas DataFrame to a format for MySQL table insertion
 # df.to_sql('table name', con=engine, if_exists='append', index=False)
 
-agg_trx_func.to_sql('agg_trx_data', con=engine, if_exists='append', index=False)
+#agg_trx_func().to_sql('agg_trx_data', con=engine, if_exists='append', index=False)
+#print(agg_trx_func())
 
-
------------------------------------------------------------------------
+#-----------------------------------------------------------------------
 #Step 4: Insert the data into the MySQL table (Not Required)
 #mycursor = mydb.cursor()
 
@@ -320,7 +320,7 @@ agg_trx_func.to_sql('agg_trx_data', con=engine, if_exists='append', index=False)
 #mydb.commit()
 #print(mycursor.rowcount, "record inserted.")
 
--------------------------------------------------------------------------
+#-------------------------------------------------------------------------
 def insert_agg_trx_data_to_mysql(db_connect,agg_trx_func):
     cursor = db_connect.cursor()
     try:
