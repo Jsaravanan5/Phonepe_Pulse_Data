@@ -1,0 +1,11 @@
+google-api-python-client
+matplotlib  
+pandas
+streamlit
+seaborn
+mysql-connector-python
+fastapi==0.95.1
+uvicorn[standard]
+pydantic==1.10.7
+python-dotenv==1.0.0
+SQLAlchemy==2.0.12
