@@ -7,10 +7,6 @@ import mysql.connector
 import streamlit as st
 import plotly.express as px 
 
-
-
-
-
 #Function to get Aggregated_Transaction:
 
 def agg_trx_func():
