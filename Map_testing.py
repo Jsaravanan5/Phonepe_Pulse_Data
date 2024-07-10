@@ -61,11 +61,11 @@ import plotly.express as px
 df2 = pd.read_csv('India_States.csv')
 df['map_trx_state'] = df2['State/UT']
 
-fig = px.choropleth(df, geojson=State, featureidkey='properties.ST_NM', locations='map_trx_state', color='map_trx_amount',
-                        color_continuous_scale="Viridis",
-                        hover_name="map_trx_amount",
+fig = px.choropleth(df, geojson=State, featureidkey='properties.ST_NM', locations='map_trx_state', color='map_trx_count',
+                        color_continuous_scale="sunset",#Viridis"
+                        #hover_name="map_trx_count",
                         scope='asia',
-                        labels={'map_trx_amount':'state-wise_transaction amount'})
+                        labels={'map_trx_count':'state-wise_transaction count'},)
 
 
 
