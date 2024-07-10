@@ -63,8 +63,8 @@ df['map_trx_state'] = df2['State/UT']
 
 fig = px.choropleth(df, geojson=State, featureidkey='properties.ST_NM', locations='map_trx_state', color='map_trx_count',
                         color_continuous_scale="sunset",#Viridis"
-                        #hover_name="map_trx_count",
-                        scope='asia',
+                        hover_name="map_trx_count",
+                        lat=df2['Latitude'],lon=df2['Longitude'],
                         labels={'map_trx_count':'state-wise_transaction count'},)
 
 
