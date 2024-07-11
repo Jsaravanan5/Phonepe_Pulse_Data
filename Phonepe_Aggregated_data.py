@@ -50,16 +50,16 @@ def agg_trx_func():
     agg_trx_df = Agg_trx_df
     #fig = px.bar(agg_trx_df, x="Agg_txn_type", y="Agg_txn_count", title="Aggregated_Transaction")
     #fig=px.sunburst(agg_trx_df, path=['Agg_txn_type', 'Trx_States','Trx_Years','Trx_Qtr'], values='Agg_txn_count')
-    #fig = px.line(agg_trx_df, x="Trx_Years", y="Agg_txn_count", title="Aggregated_Transaction")
+    fig = px.line(agg_trx_df, x="Trx_Years", y="Agg_txn_count", title="Aggregated_Transaction")
     #fig = px.pie(agg_trx_df, names="Trx_States", values="Agg_txn_count", title="Aggregated_Transaction")
     # values='pop', names='country'
-    #fig.show() 
+    fig.show() 
     #st.bar_chart(data=agg_trx_df,x='Agg_txn_type',y='Agg_txn_count', color="#f0f", width=400, height=400, use_container_width=True)
                                    
     return Agg_trx_df
 
 #4496
-#print(agg_trx_func())
+print(agg_trx_func())
 
  
 
@@ -282,7 +282,7 @@ def create_tables(db_connect):
 
 # Code Addition:
 #Import Necessary Library: 
-from sqlalchemy import create_engine
+#from sqlalchemy import create_engine
 
 
 # Step 1: Create a DataFrame with the data
@@ -296,7 +296,7 @@ from sqlalchemy import create_engine
 # Step 2: Create a SQLAlchemy engine to connect to the MySQL database
 # engine = create_engine("mysql+mysqlconnector://root:new_password@localhost/mydatabase")
 
-engine=create_engine("mysql+mysqlconnector://sqluser:password@localhost/phonepedatabase")
+#engine=create_engine("mysql+mysqlconnector://sqluser:password@localhost/phonepedatabase")
 
 # Step 3: Convert the Pandas DataFrame to a format for MySQL table insertion
 # df.to_sql('table name', con=engine, if_exists='append', index=False)
@@ -385,7 +385,7 @@ def insert_agg_user_func_to_mysql(db_connect, agg_user_func):
 
 st.title(":blue[PHONEPE AGRREGATED INFORMATION]")
 st.write("This page will provide you the aggregated phonepe pulse data(transaction,insurance,user) and its insights")
-                    
+
 
 #channel_id_input_placeholder = 'channel_id_input'
 #channel_id = st.text_input('Enter your ', key=channel_id_input_placeholder)
@@ -394,18 +394,18 @@ st.write("This page will provide you the aggregated phonepe pulse data(transacti
 
 
  # Establishing connection to MySQL database
-db_connect = connect_to_mysql()
+#db_connect = connect_to_mysql()
 # Creating tables if they don't exist
-if db_connect is not None:
-    create_tables(db_connect)
+#if db_connect is not None:
+#    create_tables(db_connect)
 # Inserting data into MySQL tables
-    insert_agg_trx_data_to_mysql(db_connect,agg_trx_func)
-    insert_agg_ins_func_to_mysql(db_connect, agg_ins_func)
-    insert_agg_user_func_to_mysql(db_connect, agg_user_func)
-else:
-    st.write("Aggregate information not inserted into tables Succesfully ")
-    # Closing the MySQL connection
-db_connect.close()
+#    insert_agg_trx_data_to_mysql(db_connect,agg_trx_func)
+#    insert_agg_ins_func_to_mysql(db_connect, agg_ins_func)
+#    insert_agg_user_func_to_mysql(db_connect, agg_user_func)
+#else:
+ #   st.write("Aggregate information not inserted into tables Succesfully ")
+ #   # Closing the MySQL connection
+ #   db_connect.close()
 
 
 

@@ -1,3 +1,5 @@
+#https://blog.devart.com/mysql-command-line-client.html#:~:text=MySQL%20client%20is%20a%20common,databases%20stored%20on%20the%20server.
+
 import sqlite3
 import pandas as pd
 import os

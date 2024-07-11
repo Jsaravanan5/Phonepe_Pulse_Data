@@ -47,7 +47,7 @@ def map_trx_data():
 
 #map_trx_data().to_csv("map_transaction.csv")
 
-
+'''
 with urlopen('https://gist.githubusercontent.com/jbrobst/56c13bbbf9d97d187fea01ca62ea5112/raw/e388c4cae20aa53cb5090210a42ebb9b765c0a36/india_states.geojson') as response:
     State = js.load(response)
     #print(State)
@@ -56,16 +56,82 @@ import pandas as pd
 df = pd.read_csv("/workspaces/Phonepe_Pulse_Data/map_trx_data.csv",
                    dtype={"map_trx_state": str})
 
-import plotly.express as px
+
 
 df2 = pd.read_csv('India_States.csv')
 df['map_trx_state'] = df2['State/UT']
 
-fig = px.choropleth(df, geojson=State, featureidkey='properties.ST_NM', locations='map_trx_state', color='map_trx_count',
+fig = px.choropleth(df, geojson=State, featureidkey='properties.ST_NM', locations='map_trx_state',color='map_trx_state',
                         color_continuous_scale="sunset",#Viridis"
-                        hover_name="map_trx_count",
-                        lat=df2['Latitude'],lon=df2['Longitude'],
-                        labels={'map_trx_count':'state-wise_transaction count'},)
+                        hover_data="map_trx_count",
+                        hover_name="map_trx_amount",
+                        labels={'map_trx_amount':'state-wise_transaction amount'})
+
+
+
+#geojson="",
+ #                 featureidkey='properties.ST_NM',
+ #                 locations='State',
+ #                 color='Total_Appopens',
+ #                 color_continuous_scale='sunset'
+
+
+fig.update_geos(fitbounds="locations", visible=False)
+fig.show()
+'''
+
+def map_user_data():
+
+    #map_User_Dictionary:
+    map_user_data_dict={'map_user_state':[],'map_user_dist':[],'map_user_years':[],'map_user_qtr':[],'map_reg_users':[],'map_app_opens':[]}
+
+    map_user_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/map/user/hover/country/india/state/")
+    #print(map_user_path)
+
+    for map_user_states in map_user_path:
+        map_user_years_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/map/user/hover/country/india/state/"+map_user_states+"/")
+        #print(map_user_years_path)
+
+        for map_user_years in map_user_years_path:
+            map_user_file_path=os.listdir("/workspaces/Phonepe_Pulse_Data/pulse/data/map/user/hover/country/india/state/"+map_user_states+"/"+map_user_years+"/")
+            #print(map_user_file_path) 
+
+            for map_user_file in map_user_file_path:
+                with open("/workspaces/Phonepe_Pulse_Data/pulse/data/map/user/hover/country/india/state/"+map_user_states+"/"+map_user_years+"/"+map_user_file,"r")as map_json_file:
+                    map_user_json_data=js.load(map_json_file)  
+                    #print(map_user_json_data)
+            
+                    
+                    for i in map_user_json_data['data']['hoverData'].items():                    
+                        map_user_data_dict['map_user_dist'].append(i[0].strip("district"))
+                        map_user_data_dict['map_reg_users'].append(i[1]['registeredUsers'])
+                        map_user_data_dict['map_app_opens'].append(i[1]['appOpens'])
+                        map_user_data_dict['map_user_state'].append(map_user_states.replace("-"," "))
+                        map_user_data_dict['map_user_years'].append(int(map_user_years))
+                        map_user_data_dict['map_user_qtr'].append(int(map_user_file.strip(".json")))
+
+
+    #Map_User_Dataframe:
+        map_user_data_df=pd.DataFrame(map_user_data_dict)
+
+    return map_user_data_df
+
+
+map_user_df=map_user_data()
+
+with urlopen('https://raw.githubusercontent.com/civictech-India/INDIA-GEO-JSON-Datasets/main/india_states.json') as response:
+    State = js.load(response)
+    #print(State)
+
+
+indian_state = pd.read_csv('India_States.csv')
+map_user_df['map_user_state'] = indian_state['State/UT']
+
+fig = px.choropleth(map_user_df, geojson=State, featureidkey='properties.NAME_1', locations='map_user_state',color='map_user_state',
+                        #color_continuous_scale="sunset",#Viridis"
+                        hover_data='map_reg_users',
+                        #hover_data="map_app_opens",
+                        labels={'map_app_opens':'state-wise_application_opens'})
 
 
 
