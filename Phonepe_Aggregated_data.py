@@ -60,21 +60,9 @@ def agg_trx_func():
 
 #4496
 #print(agg_trx_func())
-df=agg_trx_func()
 
-
-
-fig = px.bar(df, x="Trx_Years", y="Agg_txn_count",color='Trx_Qtr',title="Aggregated_Transaction year-Wise")
-st.plotly_chart(fig,use_container_width=True, key='map_trx_state', on_select="rerun", selection_mode=('points'))
-
-fig1=px.sunburst(df, path=['Trx_States',"Trx_Years",'Agg_txn_type'], values='Agg_txn_amount')
-st.plotly_chart(fig1,use_container_width=True, theme="streamlit", key='map_trx_state', on_select="rerun", selection_mode=('points'))
-
-fig2 = px.pie(df, names="Trx_States", values="Agg_txn_count", title="Aggregated_Transaction State Wise")
-st.plotly_chart(fig2,use_container_width=True, theme="streamlit", key='map_trx_state', on_select="rerun", selection_mode=('points'))
-
-fig4= px.line(df, x="Trx_States", y="Agg_txn_count", title="Aggregated_Transaction",color='Agg_txn_type')
-st.plotly_chart(fig4,use_container_width=True, theme="streamlit", key='map_trx_state', on_select="rerun", selection_mode=('points'))
+#fig4= px.line(df, x="Trx_States", y="Agg_txn_count", title="Aggregated_Transaction",color='Agg_txn_type')
+#st.plotly_chart(fig4,use_container_width=True, theme="streamlit", key='map_trx_state', on_select="rerun", selection_mode=('points'))
 
 
 
@@ -118,6 +106,8 @@ def agg_ins_func():
 
                                     
     return Agg_Insurance_df
+
+
 
 #insurance Dataframe   
 #574
@@ -168,11 +158,11 @@ def agg_user_func():
 
 
     #User DataFrame                
-    Agg_Users_df=pl.DataFrame(user_agg_data) 
-
- 
-
+    Agg_Users_df=pd.DataFrame(user_agg_data) 
     return Agg_Users_df               
+
+
+
 
 #print(agg_user_func())
 #6732
@@ -411,12 +401,57 @@ st.write("This page will provide you the aggregated phonepe pulse data(transacti
  #   # Closing the MySQL connection
  #   db_connect.close()
 
+df=agg_trx_func()
+
+col1, col2= st.columns(2,gap='small')
+
+with col1:
+    fig1= px.bar(df, x="Trx_Qtr", y="Agg_txn_amount",color='Trx_Years',title="Aggregated_Transaction year-Wise")
+    st.plotly_chart(fig1,use_container_width=True, key='map_trx_state', on_select="rerun", selection_mode=('points'))
+
+with col2:
+    fig2=px.sunburst(df, path=['Trx_States','Trx_Years','Agg_txn_type'], values='Agg_txn_amount',title='Overall aggregate Transaction view')
+    st.plotly_chart(fig2,use_container_width=True, theme="streamlit", key='map_trx_state', on_select="rerun", selection_mode=('points'))
+
+
+
+fig3 = px.pie(df, names="Trx_States", values="Agg_txn_count", title="Aggregated_Transaction State Wise")
+st.plotly_chart(fig3,use_container_width=True, theme="streamlit", key='map_trx_state', on_select="rerun", selection_mode=('points'))
+
+
+
+df1=agg_ins_func()
+
+col1, col2= st.columns(2,gap='small')
+
+with col1:
+    fig4= px.bar(df1, x="Ins_Qtr", y="Ins_txn_amount",color='Ins_Years',title="Aggregated_Insurance year-Wise")
+    st.plotly_chart(fig4,use_container_width=True, key='map_trx_state', on_select="rerun", selection_mode=('points'))
+
+with col2:
+    fig5=px.sunburst(df1, path=['Ins_States','Ins_Years'], values='Ins_txn_amount',title='Overall aggregate Insurance view')
+    st.plotly_chart(fig5,use_container_width=True, theme="streamlit", key='map_trx_state', on_select="rerun", selection_mode=('points'))
+
+fig6 = px.pie(df1, names="Ins_States", values="Ins_txn_count", title="Aggregated Insurance State Wise")
+st.plotly_chart(fig6,use_container_width=True, theme="streamlit", key='map_trx_state', on_select="rerun", selection_mode=('points'))
 
 
 
 
+df2=agg_user_func()
 
+col1, col2= st.columns(2,gap='small')
 
+with col1:
+    fig4= px.bar(df2, x="User_Qtr", y="User_Device_count",color='User_Years',title="Aggregated User year-Wise")
+    st.plotly_chart(fig4,use_container_width=True, key='map_trx_state', on_select="rerun", selection_mode=('points'))
+
+with col2:
+    fig5=px.sunburst(df2, path=['User_States','User_Years'], values='User_Device_percent',title='Overall aggregate Users view')
+    st.plotly_chart(fig5,use_container_width=True, theme="streamlit", key='map_trx_state', on_select="rerun", selection_mode=('points'))
+
+fig6 = px.pie(df2, names="User_Years", values="User_Device_count", title="Aggregated User Years Wise")
+st.plotly_chart(fig6,use_container_width=True, theme="streamlit", key='map_trx_state', on_select="rerun", selection_mode=('points'))
 
 
 

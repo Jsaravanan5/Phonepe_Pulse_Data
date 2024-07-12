@@ -60,6 +60,8 @@ def top_trx_data():
     #print(Top_trx_dist_data_df)
     #7400 rows
 
+
+
     #top Transaction Pincode Dataframe:
     Top_trx_pincode_df=pd.DataFrame(top_trx_data_pincode_dict)
     #print(Top_trx_pincode_df)
