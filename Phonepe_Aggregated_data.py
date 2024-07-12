@@ -47,30 +47,34 @@ def agg_trx_func():
                     Agg_trx_df=pl.DataFrame(agg_trx_data_dict)
 
 
-    agg_trx_df = Agg_trx_df
+    #agg_trx_df = Agg_trx_df
     #fig = px.bar(agg_trx_df, x="Agg_txn_type", y="Agg_txn_count", title="Aggregated_Transaction")
     #fig=px.sunburst(agg_trx_df, path=['Agg_txn_type', 'Trx_States','Trx_Years','Trx_Qtr'], values='Agg_txn_count')
-    fig = px.line(agg_trx_df, x="Trx_Years", y="Agg_txn_count", title="Aggregated_Transaction")
+    #fig = px.line(agg_trx_df, x="Trx_Years", y="Agg_txn_count", title="Aggregated_Transaction")
     #fig = px.pie(agg_trx_df, names="Trx_States", values="Agg_txn_count", title="Aggregated_Transaction")
     # values='pop', names='country'
-    fig.show() 
+    #fig.show() 
     #st.bar_chart(data=agg_trx_df,x='Agg_txn_type',y='Agg_txn_count', color="#f0f", width=400, height=400, use_container_width=True)
                                    
     return Agg_trx_df
 
 #4496
-print(agg_trx_func())
-
- 
-
+#print(agg_trx_func())
+df=agg_trx_func()
 
 
 
+fig = px.bar(df, x="Trx_Years", y="Agg_txn_count",color='Trx_Qtr',title="Aggregated_Transaction year-Wise")
+st.plotly_chart(fig,use_container_width=True, key='map_trx_state', on_select="rerun", selection_mode=('points'))
 
+fig1=px.sunburst(df, path=['Trx_States',"Trx_Years",'Agg_txn_type'], values='Agg_txn_amount')
+st.plotly_chart(fig1,use_container_width=True, theme="streamlit", key='map_trx_state', on_select="rerun", selection_mode=('points'))
 
+fig2 = px.pie(df, names="Trx_States", values="Agg_txn_count", title="Aggregated_Transaction State Wise")
+st.plotly_chart(fig2,use_container_width=True, theme="streamlit", key='map_trx_state', on_select="rerun", selection_mode=('points'))
 
-
-
+fig4= px.line(df, x="Trx_States", y="Agg_txn_count", title="Aggregated_Transaction",color='Agg_txn_type')
+st.plotly_chart(fig4,use_container_width=True, theme="streamlit", key='map_trx_state', on_select="rerun", selection_mode=('points'))
 
 
 
@@ -223,7 +227,7 @@ def create_tables(db_connect):
      # Table creation queries
     AGG_TRX_table_query = """
     CREATE TABLE IF NOT EXISTS agg_trx_data (
-        Tranasction_Type_Id INT NOT NULL AUTO_INCREMENT,
+        Tranasction_Type_Id INT AUTO_INCREMENT,
         Transaction_Type VARCHAR(255),
         Transaction_States VARCHAR(255),
         Transaction_Years INT,
