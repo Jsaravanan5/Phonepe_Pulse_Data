@@ -61,7 +61,6 @@ def top_trx_data():
     #7400 rows
 
 
-
     #top Transaction Pincode Dataframe:
     Top_trx_pincode_df=pd.DataFrame(top_trx_data_pincode_dict)
     #print(Top_trx_pincode_df)
@@ -70,11 +69,15 @@ def top_trx_data():
 
 #print(top_trx_data())
 
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
 
 
+df = top_trx_data()
+fig = px.bar(df, x='Top_trx_states', y="top_trx_dist_amount",color='Top_trx_dist')
+st.plotly_chart(fig,use_container_width=True, key='Top_trx_states', on_select="rerun", selection_mode=('points'))
 
-
- #TOP insurance data :           
+#TOP insurance data :           
 
 def top_ins_data():
 
