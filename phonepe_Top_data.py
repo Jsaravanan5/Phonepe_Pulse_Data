@@ -69,13 +69,11 @@ def top_trx_data():
 
 #print(top_trx_data())
 
-from plotly.subplots import make_subplots
-import plotly.graph_objects as go
 
 
 df = top_trx_data()
-fig = px.bar(df, x='Top_trx_states', y="top_trx_dist_amount",color='Top_trx_dist')
-st.plotly_chart(fig,use_container_width=True, key='Top_trx_states', on_select="rerun", selection_mode=('points'))
+#fig = px.bar(df, x='Top_trx_states', y="top_trx_dist_amount",color='Top_trx_dist')
+#st.plotly_chart(fig,use_container_width=True, key='Top_trx_states', on_select="rerun", selection_mode=('points'))
 
 #TOP insurance data :           
 
@@ -175,7 +173,7 @@ def top_user_data():
     Top_user_district_dict
     
 
-    Top_user_district_dict_df=pl.DataFrame(Top_user_district_dict)
+    Top_user_district_dict_df=pd.DataFrame(Top_user_district_dict)
     
     #output=Top_user_district_dict_df.group_by('top_user_district').agg
     #('top_reg_user_count','top_user_years')
@@ -188,8 +186,62 @@ def top_user_data():
 
 df2=top_user_data()
 
-fig6 = px.pie(df2, names="top_user_years", values="top_reg_user_count", title="No.Registration.years")
-st.plotly_chart(fig6,use_container_width=True, theme="streamlit", key='map_trx_state', on_select="rerun", selection_mode=('points'))
+#fig6 = px.pie(df2, names="top_user_years", values="top_reg_user_count", title="No.Registration.years")
+#st.plotly_chart(fig6,use_container_width=True, theme="streamlit", key='map_trx_state', on_select="rerun", selection_mode=('points'))
+
+
+def execute_query(query):
+    con = mysql.connector.connect(
+        host="localhost",
+        user="sqluser",
+        password="password",
+        database="youtubedatabase",
+        port="3306"
+    )
+    cursor = con.cursor()
+    cursor.execute(query)
+    data = cursor.fetchall()
+    con.close()
+    return data
+
+
+st.header("PHONEPE TOP 10 STATES BASED ON TRANSACTION, INSURANCE & USER")
+
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
+
+# Assuming you have your dataframes `df` and `df2` prepared
+
+# Create a 1 row, 2 column subplots figure
+fig = make_subplots(rows=1, cols=2)
+
+
+# Create the first bar chart for `top_trx_states` vs. `top_trx_dist_amount`
+bar1 = go.Bar(x=df['Top_trx_dist'], y=df['top_trx_dist_amount'],legend='District Wise Transaction Amount')
+
+# Add the first bar chart directly to the figure using `add_trace`
+fig.add_trace(bar1, row=1, col=1)
+
+# Update layout options for the first subplot (optional)
+fig.update_xaxes(title_text='State', row=1, col=1)  # Set x-axis title
+fig.update_yaxes(title_text='Total Transaction Amount', row=1, col=1)  # Set y-axis title
+
+# Create the second bar chart for `top_user_years` vs. `top_reg_user_count`
+bar2 = go.Bar(x=df2["top_user_years"], y=df2["top_reg_user_count"])
+
+# Add the second bar chart directly to the figure using `add_trace`
+fig.add_trace(bar2, row=1, col=2)
+
+# Update layout options for the second subplot (optional)
+fig.update_xaxes(title_text='Year', row=1, col=2)  # Set x-axis title
+fig.update_yaxes(title_text='Number of Registered Users', row=1, col=2)  # Set y-axis title
+
+# Update the overall figure layout
+fig.update_layout(height=600, width=800, title_text="Side By Side Subplots")
+
+# Render the figure using Streamlit
+st.plotly_chart(fig)
+
 
 
 
