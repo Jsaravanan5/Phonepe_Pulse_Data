@@ -11,3 +11,4 @@ python-dotenv==1.0.0
 SQLAlchemy==2.0.12
 plotly.express
 polars
+ipywidgets

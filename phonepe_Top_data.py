@@ -195,7 +195,7 @@ def execute_query(query):
         host="localhost",
         user="sqluser",
         password="password",
-        database="youtubedatabase",
+        database="phonepe",
         port="3306"
     )
     cursor = con.cursor()
@@ -210,14 +210,15 @@ st.header("PHONEPE TOP 10 STATES BASED ON TRANSACTION, INSURANCE & USER")
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 
-# Assuming you have your dataframes `df` and `df2` prepared
 
 # Create a 1 row, 2 column subplots figure
 fig = make_subplots(rows=1, cols=2)
 
 
+df['top_trx_dist_amount']=df['top_trx_dist_amount'].sort_values(ascending=False)
 # Create the first bar chart for `top_trx_states` vs. `top_trx_dist_amount`
-bar1 = go.Bar(x=df['Top_trx_dist'], y=df['top_trx_dist_amount'],legend='District Wise Transaction Amount')
+bar1 = go.Scatter(x=df['Top_trx_dist'], y=df['top_trx_dist_amount'])#legend='District Wise Transaction Amount')
+
 
 # Add the first bar chart directly to the figure using `add_trace`
 fig.add_trace(bar1, row=1, col=1)
@@ -227,7 +228,7 @@ fig.update_xaxes(title_text='State', row=1, col=1)  # Set x-axis title
 fig.update_yaxes(title_text='Total Transaction Amount', row=1, col=1)  # Set y-axis title
 
 # Create the second bar chart for `top_user_years` vs. `top_reg_user_count`
-bar2 = go.Bar(x=df2["top_user_years"], y=df2["top_reg_user_count"])
+bar2 = go.bar(x=df2["top_user_years"], y=df2["top_reg_user_count"])
 
 # Add the second bar chart directly to the figure using `add_trace`
 fig.add_trace(bar2, row=1, col=2)
@@ -237,10 +238,21 @@ fig.update_xaxes(title_text='Year', row=1, col=2)  # Set x-axis title
 fig.update_yaxes(title_text='Number of Registered Users', row=1, col=2)  # Set y-axis title
 
 # Update the overall figure layout
-fig.update_layout(height=600, width=800, title_text="Side By Side Subplots")
+fig.update_layout(height=600, width=800, title_text="Top district Subplots")
 
 # Render the figure using Streamlit
-st.plotly_chart(fig)
+st.plotly_chart(fig,theme='streamlit')
+
+
+
+
+
+
+
+
+
+
+
 
 
 
