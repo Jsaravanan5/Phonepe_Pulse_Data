@@ -183,12 +183,13 @@ def top_user_data():
     
     return Top_user_district_dict_df
 
-print(top_user_data())
+#print(top_user_data())
 #7400 rows
 
+df2=top_user_data()
 
-
-
+fig6 = px.pie(df2, names="top_user_years", values="top_reg_user_count", title="No.Registration.years")
+st.plotly_chart(fig6,use_container_width=True, theme="streamlit", key='map_trx_state', on_select="rerun", selection_mode=('points'))
 
 
 
