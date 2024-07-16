@@ -72,6 +72,8 @@ def top_trx_data():
 
 
 df = top_trx_data()
+print(df.describe())
+
 #fig = px.bar(df, x='Top_trx_states', y="top_trx_dist_amount",color='Top_trx_dist')
 #st.plotly_chart(fig,use_container_width=True, key='Top_trx_states', on_select="rerun", selection_mode=('points'))
 
@@ -207,6 +209,8 @@ def execute_query(query):
 
 st.header("PHONEPE TOP 10 STATES BASED ON TRANSACTION, INSURANCE & USER")
 
+
+#subplots Reference:
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 
@@ -217,7 +221,7 @@ fig = make_subplots(rows=1, cols=2)
 
 df['top_trx_dist_amount']=df['top_trx_dist_amount'].sort_values(ascending=False)
 # Create the first bar chart for `top_trx_states` vs. `top_trx_dist_amount`
-bar1 = go.Scatter(x=df['Top_trx_dist'], y=df['top_trx_dist_amount'])#legend='District Wise Transaction Amount')
+bar1 = go.Bar(x=df['Top_trx_dist'], y=df['top_trx_dist_amount'])#legend='District Wise Transaction Amount')
 
 
 # Add the first bar chart directly to the figure using `add_trace`
@@ -228,7 +232,7 @@ fig.update_xaxes(title_text='State', row=1, col=1)  # Set x-axis title
 fig.update_yaxes(title_text='Total Transaction Amount', row=1, col=1)  # Set y-axis title
 
 # Create the second bar chart for `top_user_years` vs. `top_reg_user_count`
-bar2 = go.bar(x=df2["top_user_years"], y=df2["top_reg_user_count"])
+bar2 = go.Bar(x=df2["top_user_years"], y=df2["top_reg_user_count"])
 
 # Add the second bar chart directly to the figure using `add_trace`
 fig.add_trace(bar2, row=1, col=2)
@@ -241,10 +245,12 @@ fig.update_yaxes(title_text='Number of Registered Users', row=1, col=2)  # Set y
 fig.update_layout(height=600, width=800, title_text="Top district Subplots")
 
 # Render the figure using Streamlit
-st.plotly_chart(fig,theme='streamlit')
+#st.plotly_chart(fig,theme='streamlit')
 
+#https://plotly.com/python/sliders/
 
-
+fig2 = px.bar(df, x='Top_trx_dist', y="top_trx_dist_amount",color='Top_trx_states',animation_frame='Top_trx_years',animation_group='Top_trx_states',range_y=[0,1753799000000]) #range_y=[0,1753799000000] 
+st.plotly_chart(fig2,theme='streamlit')
 
 
 
